@@ -88,9 +88,9 @@
 
                 </ul>
             </div>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form class="d-flex" role="search" method="get" action="~/Home/TimKiem">
+                <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm đĩa..." aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">Tìm</button>
             </form>
         </div>
     </nav>
@@ -183,7 +183,7 @@
     <script>
         // Chỉ cho phép chọn 1 checkbox trong nhóm lọc giá
         document.querySelectorAll('#priceFilter input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
+            checkbox.addEventListener('change', function () {
                 if (this.checked) {
                     document.querySelectorAll('#priceFilter input[type="checkbox"]').forEach(cb => {
                         if (cb !== this) cb.checked = false;
@@ -192,6 +192,5 @@
             });
         });
     </script>
-
 </body>
 </html>

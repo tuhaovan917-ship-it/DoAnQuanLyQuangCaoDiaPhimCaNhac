@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DiaPhimCaNhac>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Kết quả tìm kiếm";
+}
+
+<h3 class="text-white">Kết quả cho từ khóa: "@ViewBag.Keyword"</h3>
+<hr />
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Không tìm thấy sản phẩm phù hợp.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card bg-dark text-white border-light">
+                    <img src="~/Content/Images/@item.AnhBia" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.TenDia</h5>
+                        <p>@String.Format("{0:N0} đ", item.GiaBan)</p>
+                        <a href="~/Home/ChiTiet?maDia=@item.MaDia" class="btn btn-outline-light btn-sm">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
