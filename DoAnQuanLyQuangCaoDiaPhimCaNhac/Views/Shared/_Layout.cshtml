@@ -1,39 +1,197 @@
-﻿<!DOCTYPE html>
-<html>
+﻿﻿
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MusicWeb</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #111;
+            border-bottom: 1px solid white;
+        }
+
+            .navbar a.nav-link, .navbar-brand {
+                color: white !important;
+                font-weight: 500;
+            }
+
+        /* Sidebar */
+        .sidebar {
+            border-right: 1px solid white;
+            padding: 15px;
+        }
+
+            .sidebar .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                border: 1px solid white;
+                color: white;
+                background: none;
+            }
+
+                .sidebar .btn:hover {
+                    background-color: white;
+                    color: black;
+                }
+
+        /* Main content */
+        .main-content {
+            padding: 20px;
+        }
+
+        .image-box {
+            border: 1px solid white;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* ✅ tránh ảnh tràn ra ngoài khung */
+            position: relative; /* giữ ảnh trong layout */
+        }
+
+            .image-box img {
+                width: 100%; /* ✅ ảnh co giãn đúng khung */
+            }
+
+
+        footer {
+            border-top: 1px solid white;
+            margin-top: 30px;
+            padding: 10px 0;
+            text-align: center;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">LOGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-lg-5">
+                    <li class="nav-item"><a class="nav-link" href="~/Home/Index">TRANG CHỦ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="~/Home/Cart">GIỎ HÀNG</a></li>
+                    <li class="nav-item"><a class="nav-link" href="~/Home/Login">TÀI KHOẢN</a></li>
+
                 </ul>
             </div>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
+    <!-- Main layout -->
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <!-- Khi bấm vô cái gì thì bên renderbody hiện theo cái đó -->
+
+            <div class="col-md-2 sidebar min-vh-100 text-white p-3" style="background-color: #111;">
+                <!-- Lọc theo loại -->
+                <p class="fw-bold mb-3">Lọc theo loại</p>
+
+                <!-- Đĩa -->
+                <div class="dropdown mb-3">
+                    <button class="btn btn-outline-light w-100 text-start dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🎵 Đĩa
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="dropdown-item" href="#">Nhạc trữ tình</a></li>
+                        <li><a class="dropdown-item" href="#">Pop</a></li>
+                        <li><a class="dropdown-item" href="#">Rock</a></li>
+                        <li><a class="dropdown-item" href="#">Cổ điển</a></li>
+                    </ul>
+                </div>
+
+                <!-- Phim -->
+                <div class="dropdown mb-4">
+                    <button class="btn btn-outline-light w-100 text-start dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🎬 Phim
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="dropdown-item" href="#">Tình cảm</a></li>
+                        <li><a class="dropdown-item" href="#">Hành động</a></li>
+                        <li><a class="dropdown-item" href="#">Kinh dị</a></li>
+                        <li><a class="dropdown-item" href="#">Hoạt hình</a></li>
+                    </ul>
+                </div>
+
+                <hr style="border-color: rgba(255,255,255,0.3);">
+
+                <!-- Lọc theo giá -->
+                <p class="fw-bold mb-3">Lọc theo giá</p>
+
+                <form class="d-flex flex-column gap-2" id="priceFilter">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="price1" name="price" value="under100">
+                        <label class="form-check-label" for="price1">Dưới 100k</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="price2" name="price" value="100-300">
+                        <label class="form-check-label" for="price2">100k - 300k</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="price3" name="price" value="300-500">
+                        <label class="form-check-label" for="price3">300k - 500k</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="price4" name="price" value="over500">
+                        <label class="form-check-label" for="price4">Trên 500k</label>
+                    </div>
+                </form>
+            </div>
+
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="image-box mb-4">
+                    <img src="~/jjsus-696x392-1.jpg">
+                </div>
+
+                <hr />
+
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <footer class="justify-content-center align-content-center">
+        &copy; 2025 - MusicWeb
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script -->
+    <!-- Đừng có quan tâm tới cái script này-->
+    <script>
+        // Chỉ cho phép chọn 1 checkbox trong nhóm lọc giá
+        document.querySelectorAll('#priceFilter input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    document.querySelectorAll('#priceFilter input[type="checkbox"]').forEach(cb => {
+                        if (cb !== this) cb.checked = false;
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
