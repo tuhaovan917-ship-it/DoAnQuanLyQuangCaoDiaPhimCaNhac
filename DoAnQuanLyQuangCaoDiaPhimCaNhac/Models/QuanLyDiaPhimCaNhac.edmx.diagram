@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2708ca8ce22e499893ad97165c637bee" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.ChiTietDonHang" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.DanhGiaSanPham" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.DiaPhimCaNhac" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.DonHang" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.GiaoDichThanhToan" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.GioHang" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.KhachHang" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.KhuyenMai" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.LoaiDia" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.NgheSi" Width="1.5" PointX="9" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.NguoiBan" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.NhaSanXuat" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.ThamGiaThucHien" Width="1.5" PointX="11.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyDiaPhimCaNhacModel.TrangThaiGiaoHang" Width="1.5" PointX="3.75" PointY="20" IsExpanded="true" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_ChiTietDonHang_DiaPhimCaNhac" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_ChiTietDonHang_DonHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DanhGiaSanPham_DiaPhimCaNhac" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DanhGiaSanPham_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DiaPhimCaNhac_LoaiDia" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DiaPhimCaNhac_NguoiBan" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DiaPhimCaNhac_NhaSanXuat" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_GioHang_DiaPhimCaNhac" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_KhuyenMai_DiaPhimCaNhac" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_ThamGiaThucHien_DiaPhimCaNhac" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DonHang_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DonHang_NguoiBan" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_DonHang_TrangThaiGiaoHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_GiaoDichThanhToan_DonHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_GioHang_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_KhuyenMai_NguoiBan" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyDiaPhimCaNhacModel.FK_ThamGiaThucHien_NgheSi" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
