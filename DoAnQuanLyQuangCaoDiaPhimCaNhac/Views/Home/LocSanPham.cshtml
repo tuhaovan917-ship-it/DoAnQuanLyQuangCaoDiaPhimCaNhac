@@ -1,15 +1,26 @@
 ﻿@model IEnumerable<DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DiaPhimCaNhac>
 @{
+    ViewBag.Title = "Kết quả lọc sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Kết quả tìm kiếm";
 }
 
-<h3 class="text-white">Kết quả cho từ khóa: "@ViewBag.Keyword"</h3>
-<hr />
+<h2 class="text-white">
+    @Html.Raw(ViewBag.Icon) Kết quả lọc
+    @if (ViewBag.Loai != null)
+    {<span>- <strong>@ViewBag.Loai</strong></span>}
+</h2>
+
+<p class="text-secondary">
+    @if (ViewBag.Loai != null)
+    {
+        <span>Thể loại: <strong>@ViewBag.Loai</strong></span>
+    }
+    <span> - Tổng: <strong>@ViewBag.Count</strong> sản phẩm</span>
+</p>
 
 @if (!Model.Any())
 {
-    <p class="text-muted">Không tìm thấy sản phẩm phù hợp.</p>
+    <p class="text-warning">Không tìm thấy sản phẩm phù hợp.</p>
 }
 else
 {
