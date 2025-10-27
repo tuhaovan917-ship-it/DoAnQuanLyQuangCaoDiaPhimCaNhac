@@ -1,0 +1,42 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.sp_GetChiTietDiaPhimCaNhac_Result
+@{
+    ViewBag.Title = Model.TenDia;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="row text-white">
+    <div class="col-md-4">
+        <img src="~/Content/Images/@Model.AnhBia" class="img-fluid border border-light" />
+    </div>
+    <div class="col-md-8">
+        <h2>@Model.TenDia</h2>
+        <p><strong>Giá bán:</strong> @String.Format("{0:N0} đ", Model.GiaBan)</p>
+        <p><strong>Loại:</strong> @Model.TenLoaiDia</p>
+        <p><strong>Nhà sản xuất:</strong> @Model.TenNhaSanXuat</p>
+        <p><strong>Mô tả:</strong> @Model.MoTa</p>
+        <p><strong>Đánh giá:</strong> @(Model.DanhGia ?? 0)/5</p>
+        <p><strong>Số lượt xem:</strong> @(Model.SoLuotXem ?? 0)</p>
+        <button class="btn btn-outline-light">🛒 Thêm vào giỏ hàng</button>
+    </div>
+</div>*@
+<div class="container text-white">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="~/Content/Images/@Model.AnhBia" class="img-fluid border border-light" />
+        </div>
+
+        <div class="col-md-8">
+            <h2>@Model.TenDia</h2>
+            <p><strong>Giá bán:</strong> @String.Format("{0:N0} đ", Model.GiaBan)</p>
+            <p><strong>Loại:</strong> @Model.TenLoaiDia</p>
+            <p><strong>Nhà sản xuất:</strong> @Model.TenNhaSanXuat</p>
+            <p><strong>Mô tả:</strong> @Model.MoTa</p>
+            <p><strong>Đánh giá:</strong> @(Model.DanhGia ?? 0)/5</p>
+            <p><strong>Số lượt xem:</strong> @(Model.SoLuotXem ?? 0)</p>
+            <div class="mt-3">
+                <input type="number" id="soLuong" class="form-control d-inline-block" style="width:100px" value="1" min="1" />
+                <button id="btnAddToCart" class="btn btn-outline-light ms-2">🛒 Thêm vào giỏ hàng</button>
+            </div>
+        </div>
+    </div>
+</div>

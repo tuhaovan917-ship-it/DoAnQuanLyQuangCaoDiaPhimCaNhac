@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DiaPhimCaNhac>
+@{
+    ViewBag.Title = "Kết quả lọc sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-white">
+    @Html.Raw(ViewBag.Icon) Kết quả lọc
+    @if (ViewBag.Loai != null)
+    {<span>- <strong>@ViewBag.Loai</strong></span>}
+</h2>
+
+<p class="text-secondary">
+    @if (ViewBag.Loai != null)
+    {
+        <span>Thể loại: <strong>@ViewBag.Loai</strong></span>
+    }
+    <span> - Tổng: <strong>@ViewBag.Count</strong> sản phẩm</span>
+</p>
+
+@if (!Model.Any())
+{
+    <p class="text-warning">Không tìm thấy sản phẩm phù hợp.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <a href="@Url.Action("ChiTiet", "Home", new { maDia = item.MaDia })">
+                        <img src="~/Content/Images/@item.AnhBia" alt="@item.TenDia" />
+                    </a>
+                    <div class="card-body">
+                        <h5>@item.TenDia</h5>
+                        <p>@item.GiaBan.ToString("N0") VNĐ</p>
+                        <button class="btn btn-outline-light">Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
