@@ -1,0 +1,205 @@
+﻿@using DoAnQuanLyQuangCaoDiaPhimCaNhac.Models;
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var noiBat = ViewBag.SanPhamNoiBat as List<sp_GetSanPhamNoiBat_Result>;
+    var moi = ViewBag.SanPhamMoi as List<DiaPhimCaNhac>;
+}
+
+<link href="@Url.Content("~/Content/site-custom.css")" rel="stylesheet" />
+
+<style>
+    /* ====== CARD SẢN PHẨM ====== */
+    .product-card {
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.35s ease;
+        height: 100%;
+    }
+
+        .product-card:hover {
+            border-color: #ffc107;
+            transform: translateY(-6px);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.15);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .product-card .card-body {
+            padding: 15px;
+        }
+
+        .product-card h5 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 8px;
+            min-height: 40px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-card .price {
+            color: #ffc107;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        /* ====== RATING ====== */
+        .product-card .rating {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+            .product-card .rating i {
+                font-size: 16px;
+            }
+
+            .product-card .rating small {
+                color: #aaa;
+                margin-left: 5px;
+            }
+
+    /* ====== BADGE "NỔI BẬT" ====== */
+    .badge-featured {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: linear-gradient(90deg, #ffc107, #ff6600);
+        color: #000;
+        font-weight: 600;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* ====== TIÊU ĐỀ PHẦN ====== */
+    h2.section-title {
+        color: #fff;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    hr.border-light {
+        border-color: #333 !important;
+        margin: 40px 0;
+    }
+
+
+</style>
+
+<!-- ==================== SẢN PHẨM NỔI BẬT ==================== -->
+<h2 class="section-title"><i class="bi bi-star-fill text-warning"></i> Sản phẩm nổi bật</h2>
+<div class="row">
+    @foreach (var item in noiBat)
+    {
+        <div class="col-md-3 mb-4 product-item"
+             data-price="@item.GiaBan"
+             data-name="@item.TenDia"
+             data-date="@(item.NgayCapNhat?.ToString("yyyyMMdd") ?? DateTime.Now.ToString("yyyyMMdd"))"
+             data-views="@(item.SoLuotXem ?? 0)">
+            <div class="product-card">
+                <span class="badge-featured"><i class="bi bi-star-fill"></i> Nổi bật</span>
+                <a href="@Url.Action("ChiTiet", "Home", new { maDia = item.MaDia })">
+                    <img src="~/Content/Images/@item.AnhBia" alt="@item.TenDia"
+                         onerror="this.src='/Content/Images/default.jpg'" />
+                </a>
+                <div class="card-body">
+                    <h5 title="@item.TenDia">@item.TenDia</h5>
+
+                    @if (item.DanhGia != null && item.DanhGia > 0)
+                    {
+                        <div class="rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= item.DanhGia)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-star text-secondary"></i>
+                                }
+                            }
+                            (@item.DanhGia ⭐)
+                        </div>
+                    }
+
+                    <p class="price">@item.GiaBan.ToString("N0") VNĐ</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr class="border-light" />
+
+<!-- ==================== SẢN PHẨM MỚI ==================== -->
+<h2 class="section-title"><i class="bi bi-music-note-beamed text-info"></i> Sản phẩm mới</h2>
+<div class="row">
+    @foreach (var item in moi)
+    {
+        <div class="col-md-3 mb-4 product-item"
+             data-price="@item.GiaBan"
+             data-name="@item.TenDia"
+             data-date="@(item.NgayCapNhat?.ToString("yyyyMMdd") ?? DateTime.Now.ToString("yyyyMMdd"))"
+             data-views="@(item.SoLuotXem ?? 0)">
+            <div class="product-card">
+                <a href="@Url.Action("ChiTiet", "Home", new { maDia = item.MaDia })">
+                    <img src="~/Content/Images/@item.AnhBia" alt="@item.TenDia"
+                         onerror="this.src='/Content/Images/default.jpg'" />
+                </a>
+                <div class="card-body">
+                    <h5 title="@item.TenDia">@item.TenDia</h5>
+
+                    @if (item.DanhGia != null && item.DanhGia > 0)
+                    {
+                        <div class="rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= item.DanhGia)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-star text-secondary"></i>
+                                }
+                            }
+                            (@item.DanhGia ⭐)
+                        </div>
+                    }
+
+                    <p class="price">@item.GiaBan.ToString("N0") VNĐ</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

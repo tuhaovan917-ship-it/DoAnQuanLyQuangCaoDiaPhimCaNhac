@@ -1,0 +1,364 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - MusicWeb</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            padding: 40px 20px;
+        }
+
+        .register-container {
+            background: rgba(17, 17, 17, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+            .logo-section h2 {
+                font-size: 28px;
+                font-weight: 700;
+                background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 8px;
+            }
+
+            .logo-section p {
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 14px;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control, textarea.form-control {
+            width: 100%;
+            padding: 12px 45px 12px 16px; /* chừa chỗ icon */
+            background-color: rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(68, 68, 68, 0.5);
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus {
+                background-color: rgba(34, 34, 34, 1);
+                border-color: #007bff;
+                color: #fff !important;
+                box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+            }
+
+            .form-control::placeholder {
+                color: rgba(255, 255, 255, 0.4);
+            }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s ease;
+        }
+
+            .toggle-password:hover {
+                color: #00d4ff;
+            }
+
+        .form-check {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            background-color: rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(68, 68, 68, 0.5);
+        }
+
+            .form-check-input:checked {
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+
+        .form-check-label {
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+            .btn-register:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+            }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+            .divider::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 100%;
+                height: 1px;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .divider span {
+                background: rgba(17, 17, 17, 0.95);
+                padding: 0 15px;
+                position: relative;
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 14px;
+            }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .links a {
+                color: #007bff;
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+
+                .links a:hover {
+                    color: #00d4ff;
+                    text-decoration: underline;
+                }
+
+        .footer-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            margin-top: 30px;
+        }
+
+        @@media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .register-container {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Fix autofill màu trắng của Chrome/Safari */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px rgba(34, 34, 34, 0.9) inset !important;
+            -webkit-text-fill-color: #fff !important;
+            caret-color: #fff !important;
+            transition: background-color 9999s ease-in-out 0s;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="logo-section">
+            <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
+            <p>Tạo tài khoản mới tại MusicWeb</p>
+        </div>
+
+        <!-- Alert -->
+        @if (ViewBag.ErrorMessage != null)
+        {<div class="alert alert-danger">@ViewBag.ErrorMessage</div>}
+
+        @if (ViewBag.SuccessMessage != null)
+        {<div class="alert alert-success">@ViewBag.SuccessMessage</div>}
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="hoTen" class="form-label">Họ Tên *</label>
+                        <input type="text" class="form-control" id="hoTen" name="hoTen" placeholder="Nhập họ và tên" required />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="taiKhoan" class="form-label">Tài Khoản *</label>
+                        <input type="text" class="form-control" id="taiKhoan" name="taiKhoan" placeholder="Nhập tài khoản" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="matKhau" class="form-label">Mật Khẩu *</label>
+                        <input type="password" class="form-control" id="matKhau" name="matKhau" placeholder="Nhập mật khẩu" required />
+                        <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="DienThoai" class="form-label">Điện Thoại</label>
+                        <input type="tel" class="form-control" id="DienThoai" name="DienThoai" placeholder="Nhập số điện thoại" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Giới Tính</label>
+                        <div style="padding-top: 8px;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gioiTinh" id="nam" value="Nam" checked />
+                                <label class="form-check-label" for="nam">Nam</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gioiTinh" id="nu" value="Nữ" />
+                                <label class="form-check-label" for="nu">Nữ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="diaChi" class="form-label">Địa Chỉ</label>
+                <textarea class="form-control" id="diaChi" name="diaChi" placeholder="Nhập địa chỉ của bạn" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn-register">ĐĂNG KÝ</button>
+        }
+
+        <div class="divider"><span>hoặc</span></div>
+
+        <div class="links">
+            <p>Đã có tài khoản? <a href="@Url.Action("Login", "Account")">Đăng nhập ngay</a></p>
+            <p><a href="@Url.Action("Index", "Home")">Quay lại trang chủ</a></p>
+        </div>
+
+        <div class="footer-text">© 2025 - MusicWeb</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Toggle hiện/ẩn mật khẩu
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("matKhau");
+
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            togglePassword.classList.toggle("bi-eye");
+            togglePassword.classList.toggle("bi-eye-slash");
+        });
+
+        // Form validation
+        const form = document.getElementById('registerForm');
+        const inputs = form.querySelectorAll('input[required], textarea[required]');
+        form.addEventListener('submit', (e) => {
+            let valid = true;
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            if (!valid) e.preventDefault();
+        });
+    </script>
+</body>
+</html>

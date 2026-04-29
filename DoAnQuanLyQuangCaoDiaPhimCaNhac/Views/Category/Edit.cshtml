@@ -1,0 +1,16 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.LoaiDia
+
+<h2 class="text-white">✏ Sửa Thể Loại</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.MaLoaiDia)
+
+    <div class="form-group text-white">
+        <label>Tên Thể Loại</label>
+        @Html.TextBoxFor(m => m.TenLoaiDia, new { @class = "form-control" })
+    </div>
+
+    <button class="btn btn-primary mt-3">Cập Nhật</button>
+    <a href="~/Category" class="btn btn-secondary mt-3">Hủy</a>
+}

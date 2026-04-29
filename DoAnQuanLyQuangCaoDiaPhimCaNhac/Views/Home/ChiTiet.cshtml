@@ -1,0 +1,148 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.sp_GetChiTietDiaPhimCaNhac_Result
+@{
+    ViewBag.Title = Model.TenDia;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-white">
+    <div class="col-md-4">
+        <img src="~/Content/Images/@Model.AnhBia" class="img-fluid border border-light" alt="@Model.TenDia" />
+    </div>
+    <div class="col-md-8">
+        <h2>@Model.TenDia</h2>
+        <div class="mb-3">
+            <p><strong>Giá bán: @String.Format("{0:N0} VNĐ", Model.GiaBan)</strong></p>
+            <p><strong>Loại:</strong> @Model.TenLoaiDia</p>
+            <p><strong>Nhà sản xuất:</strong> @Model.TenNhaSanXuat</p>
+            <p>
+                <strong>Đánh giá:</strong>
+                <span class="text-warning">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= (Model.DanhGia ?? 0))
+                        {
+                            <span>★</span>
+                        }
+                        else
+                        {
+                            <span>☆</span>
+                        }
+                    }
+                    (@(Model.DanhGia ?? 0)/5)
+                </span>
+            </p>
+            <p><strong>Số lượt xem:</strong> @(Model.SoLuotXem ?? 0)</p>
+        </div>
+
+        <div class="mb-4">
+            <h5>Mô tả:</h5>
+            <p>@Model.MoTa</p>
+        </div>
+
+        @if (Session["UserId"] != null && Session["UserType"].ToString() == "Customer")
+        {
+            <div class="mb-3">
+                <label for="soLuong" class="form-label">Số lượng:</label>
+                @{
+                    int soLuongTon = ((int?)Model.SoLuongTon) ?? 0;
+                }
+
+                <input type="number" id="soLuong" class="form-control d-inline-block" style="width: 100px;"
+                       value="1" min="1" max="@soLuongTon" @(soLuongTon == 0 ? "disabled" : "") />
+
+                <script>
+                    const soLuongInput = document.getElementById("soLuong");
+                    const maxSoLuong = parseInt(soLuongInput.max);
+
+                    soLuongInput.addEventListener("input", function () {
+                        let value = this.value;
+
+                        // Chặn ký tự không phải số
+                        value = value.replace(/[^0-9]/g, "");
+
+                        // Nếu rỗng thì đặt lại 1
+                        if (value === "" || isNaN(value)) {
+                            value = 1;
+                        }
+
+                        // Ép về số nguyên
+                        value = parseInt(value);
+
+                        // Giới hạn trong khoảng [1, max]
+                        if (value < 1) value = 1;
+                        if (value > maxSoLuong) value = maxSoLuong;
+
+                        this.value = value;
+                    });
+                </script>
+
+                <span class="ms-3">
+                    @if (soLuongTon > 0)
+                    {
+                        <span>Còn lại: @soLuongTon sản phẩm</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Hết hàng</span>
+                    }
+                </span>
+            </div>
+
+            if (ViewBag.InCart != null && ViewBag.InCart == true)
+            {
+                <div class="alert alert-info">
+                    <strong>ℹ️ Sản phẩm đã có trong giỏ hàng!</strong>
+                    <a href="@Url.Action("Index", "Cart")" class="alert-link">Xem giỏ hàng</a>
+                </div>
+            }
+
+            <!-- ✅ Căn 2 nút ngang hàng -->
+            <div class="d-flex align-items-center gap-3 mt-4">
+                @*<button class="btn btn-primary btn-lg" onclick="addToCart(@Model.MaDia)">
+                    🛒 Thêm vào giỏ hàng
+                </button>*@
+
+                <button class="btn btn-primary btn-lg" onclick="handleAddToCart(@Model.MaDia)">
+                    🛒 Thêm vào giỏ hàng
+                </button>
+
+                @*<a href="@Url.Action("Index", "Home")" class="btn btn-outline-light btn-lg">
+                    ← Quay lại
+                </a>*@
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>⚠️ Vui lòng <a href="@Url.Action("Login", "Account")" class="alert-link">đăng nhập</a> để mua hàng!</strong>
+            </div>
+        }
+
+
+        @*<a href="@Url.Action("Index", "Home")" class="btn btn-outline-light mt-3">← Quay lại</a>*@
+    </div>
+</div>
+
+<script>
+    //function addToCart(maDia) {
+    //    var soLuong = parseInt(document.getElementById('soLuong').value);
+    //    if (soLuong < 1) {
+    //        alert('Số lượng phải ít nhất là 1!');
+    //        return;
+    //    }
+
+    //    addToCart(maDia, soLuong); // Sử dụng function từ layout
+    //}
+
+    function handleAddToCart(maDia) {
+        var soLuong = parseInt(document.getElementById('soLuong').value);
+        if (soLuong < 1) {
+            alert('Số lượng phải ít nhất là 1!');
+            return;
+        }
+
+        // ✅ Gọi đúng hàm global trong layout
+        window.addToCart(maDia, soLuong);
+    }
+
+</script>

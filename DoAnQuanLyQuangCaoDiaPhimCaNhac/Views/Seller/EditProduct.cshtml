@@ -1,0 +1,57 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DiaPhimCaNhac
+
+
+@{
+    ViewBag.Title = "Chỉnh sửa sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chỉnh sửa sản phẩm</h2>
+
+@using (Html.BeginForm("EditProduct", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.MaDia)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenDia)
+        @Html.TextBoxFor(model => model.TenDia, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GiaBan)
+        @Html.TextBoxFor(model => model.GiaBan, new { @class = "form-control", type = "number", min = "0" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MoTa)
+        @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", rows = 4 })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Loại đĩa")
+        @Html.DropDownList("MaLoaiDia", ViewBag.LoaiDiaList as SelectList, "Chọn loại đĩa", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Nhà sản xuất")
+        @Html.DropDownList("MaNhaSanXuat", ViewBag.NhaSanXuatList as SelectList, "Chọn nhà sản xuất", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh bìa hiện tại:</label><br />
+        <img src="~/Content/Images/Products/@Model.AnhBia" width="150" />
+    </div>
+
+    <div class="form-group">
+        <label>Tải ảnh mới (nếu muốn đổi)</label>
+        <input type="file" name="AnhBiaFile" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+    <a href="@Url.Action("Products", "Seller")" class="btn btn-secondary">Quay lại</a>
+}
+
+
+

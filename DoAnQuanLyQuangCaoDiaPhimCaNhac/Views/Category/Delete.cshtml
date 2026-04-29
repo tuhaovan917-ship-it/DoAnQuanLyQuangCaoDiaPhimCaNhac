@@ -1,0 +1,15 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.LoaiDia
+
+<h2 class="text-white">🗑 Xóa Thể Loại</h2>
+
+<div class="alert alert-danger">
+    Bạn có chắc muốn xóa thể loại <strong>@Model.TenLoaiDia</strong>?
+</div>
+
+@using (Html.BeginForm("Delete", "Category", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.MaLoaiDia)
+
+    <button class="btn btn-danger">Xóa</button>
+    <a href="~/Category" class="btn btn-secondary">Hủy</a>
+}

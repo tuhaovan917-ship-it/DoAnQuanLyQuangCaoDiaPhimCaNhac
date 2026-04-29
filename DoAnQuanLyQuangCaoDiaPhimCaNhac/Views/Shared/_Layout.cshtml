@@ -1,0 +1,380 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MusicWeb</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #111;
+            border-bottom: 1px solid white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1030;
+        }
+
+            .navbar a.nav-link,
+            .navbar-brand {
+                color: white !important;
+                font-weight: 500;
+            }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 16.6667%;
+            height: calc(100vh - 70px);
+            background-color: #111;
+            border-right: 1px solid white;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+            .sidebar .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                border: 1px solid white;
+                color: white;
+                background: none;
+            }
+
+                .sidebar .btn:hover {
+                    background-color: white;
+                    color: black;
+                }
+
+        /* Main content */
+        .main-content {
+            margin-top: 70px;
+            margin-left: 16.6667%;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .image-box {
+            border: 1px solid white;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+            .image-box img {
+                width: 100%;
+            }
+
+        footer {
+            border-top: 1px solid white;
+            margin-top: 30px;
+            padding: 10px 0;
+            text-align: center;
+            color: #aaa;
+        }
+
+        /* Dropdown - nền đen chữ trắng */
+        .dropdown-menu {
+            background-color: #222 !important;
+            border: 1px solid #444 !important;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-item {
+            color: #fff !important;
+            padding: 8px 16px;
+            transition: background-color 0.2s ease;
+        }
+
+            .dropdown-item:hover,
+            .dropdown-item:focus {
+                background-color: #333 !important;
+                color: #0d6efd !important;
+            }
+
+        .nav-link.dropdown-toggle {
+            color: white !important;
+        }
+
+            .nav-link.dropdown-toggle:hover {
+                color: #0d6efd !important;
+            }
+
+        .form-check-input {
+            background-color: #333;
+            border-color: #666;
+        }
+
+            .form-check-input:checked {
+                background-color: #28a745;
+                border-color: #28a745;
+            }
+
+        .badge {
+            font-size: 11px;
+            padding: 4px 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+                <img src="~/Content/Images/logo_mediadischub.jpg"
+                     alt="MediaDiscHub Logo"
+                     style="height: 50px; width: auto; max-width: 200px; object-fit: contain;"
+                     class="me-2" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-lg-5">
+                    <li class="nav-item"><a class="nav-link" href="~/Home/Index">TRANG CHỦ</a></li>
+
+                    @if (Session["UserId"] != null)
+                    {
+                        if (Session["UserType"].ToString() == "Customer")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Cart">
+                                    GIỎ HÀNG
+                                    <span id="cartCount" class="badge bg-danger ms-1">0</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Xin chào, @Session["UserName"]
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (Session["UserType"].ToString() == "Seller")
+                                {
+                                    <li><a class="dropdown-item" href="~/Seller">QUẢN LÝ CỬA HÀNG</a></li>
+                                }
+                                <li><a class="dropdown-item" href="~/Account/Logout">ĐĂNG XUẤT</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link" href="~/Account/Login">ĐĂNG NHẬP</a></li>
+                        <li class="nav-item"><a class="nav-link" href="~/Account/Register">ĐĂNG KÝ</a></li>
+                    }
+                </ul>
+            </div>
+
+            <form class="d-flex" role="search" method="get" action="~/Home/TimKiem">
+                <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm kiếm đĩa..." aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit">Tìm</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Main layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <p class="fw-bold mb-3">Lọc theo loại</p>
+
+                <!-- Đĩa nhạc -->
+                <div class="dropdown mb-3">
+                    <button class="btn btn-outline-light w-100 text-start dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        🎵 Đĩa Nhạc
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Nhạc Việt Nam" data-phim="false">Nhạc Việt Nam</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Nhạc Quốc Tế" data-phim="false">Nhạc Quốc Tế</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Pop" data-phim="false">Nhạc Trẻ</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Cổ điển" data-phim="false">Nhạc Cổ Điển</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Nhạc Hoa Ngữ" data-phim="false">Nhạc Hoa Ngữ</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Nhạc Hàn Quốc" data-phim="false">Nhạc Hàn Quốc</a></li>
+                    </ul>
+                </div>
+
+                <!-- Phim -->
+                <div class="dropdown mb-4">
+                    <button class="btn btn-outline-light w-100 text-start dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        🎬 Phim
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Tình Cảm" data-phim="true">Tình cảm</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Hành Động" data-phim="true">Hành động</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Kinh Dị" data-phim="true">Kinh dị</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Hài Kịch" data-phim="true">Hài kịch</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Hoạt Hình" data-phim="true">Hoạt hình</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Cổ Trang" data-phim="true">Cổ trang</a></li>
+                        <li><a class="dropdown-item filter-category" href="#" data-loai="Võ Thuật" data-phim="true">Võ thuật</a></li>
+                    </ul>
+                </div>
+
+                <hr style="border-color: rgba(255,255,255,0.3);">
+
+                <!-- Lọc giá -->
+                <p class="fw-bold mb-3">Lọc theo giá</p>
+                <form id="priceFilterForm">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input price-filter" type="checkbox" id="price1" value="under100">
+                        <label class="form-check-label" for="price1">Dưới 100k</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input price-filter" type="checkbox" id="price2" value="100-300">
+                        <label class="form-check-label" for="price2">100k - 300k</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input price-filter" type="checkbox" id="price3" value="300-500">
+                        <label class="form-check-label" for="price3">300k - 500k</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input price-filter" type="checkbox" id="price4" value="over500">
+                        <label class="form-check-label" for="price4">Trên 500k</label>
+                    </div>
+
+                    <button type="button" id="applyFilter" class="btn btn-success w-100 mb-2">Áp dụng lọc</button>
+                    <button type="button" id="clearFilter" class="btn btn-outline-secondary w-100">Xóa bộ lọc</button>
+                </form>
+            </div>
+
+            <!-- Main -->
+            <div class="col-md-10 main-content">
+                <div class="image-box mb-4">
+                    <img src="~/Content/Images/Ey7jFoYVEAMjdx6.jpg" />
+                </div>
+                <hr />
+                <main role="main">@RenderBody()</main>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; 2025 - MusicWeb</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+
+    <script>
+        // --- Cập nhật giỏ hàng ---
+        function updateCartCount() {
+            $.ajax({
+                url: '@Url.Action("GetCartCount", "Cart")',
+                type: 'GET',
+                success: r => $('#cartCount').text(r.count),
+                error: () => $('#cartCount').text('0')
+            });
+        }
+        $(document).ready(updateCartCount);
+
+        // --- Bộ lọc kết hợp ---
+        let currentFilters = { loai: null, laPhim: null, prices: [] };
+
+        function loadCurrentFilters() {
+            const p = new URLSearchParams(window.location.search);
+            currentFilters.loai = p.get("loai");
+            currentFilters.laPhim = p.get("laPhim");
+            currentFilters.prices = p.getAll("price");
+        }
+
+        function updatePriceFilters() {
+            currentFilters.prices = [];
+            document.querySelectorAll('.price-filter:checked').forEach(cb => currentFilters.prices.push(cb.value));
+        }
+
+        function applyFilters() {
+            let url = '@Url.Action("LocSanPham", "Home")?';
+            let params = [];
+
+            if (currentFilters.loai)
+                params.push('loai=' + encodeURIComponent(currentFilters.loai));
+
+            if (currentFilters.laPhim !== null)
+                params.push('laPhim=' + currentFilters.laPhim);
+
+            if (currentFilters.prices.length > 0)
+                currentFilters.prices.forEach(p => params.push('price=' + p));
+
+            window.location.href = url + params.join('&');
+        }
+
+        document.querySelectorAll('.filter-category').forEach(item => {
+            item.addEventListener('click', e => {
+                e.preventDefault();
+                updatePriceFilters();
+                currentFilters.loai = item.dataset.loai;
+                currentFilters.laPhim = item.dataset.phim;
+                applyFilters();
+            });
+        });
+
+        document.getElementById('applyFilter').addEventListener('click', () => {
+            updatePriceFilters();
+            applyFilters();
+        });
+
+        document.getElementById('clearFilter').addEventListener('click', () => {
+            document.querySelectorAll('.price-filter').forEach(cb => cb.checked = false);
+            currentFilters = { loai: null, laPhim: null, prices: [] };
+            window.location.href = '@Url.Action("Index", "Home")';
+        });
+
+        window.addEventListener('load', () => {
+            loadCurrentFilters();
+            currentFilters.prices.forEach(p => {
+                const cb = document.querySelector(`.price-filter[value="${p}"]`);
+                if (cb) cb.checked = true;
+            });
+        });
+    </script>
+
+    <script>
+    // ===============================
+    // HÀM THÊM SẢN PHẨM VÀO GIỎ HÀNG
+    // ===============================
+    window.addToCart = function (maDia, soLuong) {
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Cart")',
+            type: 'POST',
+            data: {
+                maDia: maDia,
+                soLuong: soLuong
+            },
+            success: function (res) {
+                if (res.success) {
+                    alert("✔ Thêm vào giỏ hàng thành công!");
+                    updateCartCount();  // cập nhật số trên icon giỏ hàng
+                } else {
+                    alert("❌ " + res.message);
+                }
+            },
+            error: function () {
+                alert("❌ Lỗi kết nối đến server!");
+            }
+        });
+    };
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

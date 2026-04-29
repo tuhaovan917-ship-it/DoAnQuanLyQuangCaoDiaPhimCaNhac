@@ -1,0 +1,323 @@
+@model List<DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DiaPhimCaNhac>
+
+@{
+    ViewBag.Title = "Quản Lý Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quản Lý Sản Phẩm - MusicWeb</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+        }
+        .card {
+            background-color: #111;
+            border: 1px solid white;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #222;
+            border-bottom: 1px solid white;
+            color: white;
+        }
+        .table {
+            color: white;
+        }
+        .table th {
+            background-color: #222;
+            border-color: #444;
+            color: white;
+        }
+        .table td {
+            background-color: #111;
+            border-color: #444;
+        }
+        .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+        }
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+        .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        .status-active {
+            background-color: #28a745;
+            color: white;
+        }
+        .status-inactive {
+            background-color: #dc3545;
+            color: white;
+        }
+        .modal-content {
+            background-color: #111;
+            border: 1px solid white;
+        }
+        .modal-header {
+            background-color: #222;
+            border-bottom: 1px solid white;
+            color: white;
+        }
+        .form-control {
+            background-color: #222;
+            border: 1px solid #444;
+            color: white;
+        }
+        .form-control:focus {
+            background-color: #222;
+            border-color: #007bff;
+            color: white;
+        }
+
+        /* Toàn bộ bảng: chữ trắng, đậm */
+        .table td,
+        .table th {
+            color: white !important;
+            font-weight: 600; /* đậm */
+        }
+
+            /* Nếu muốn chữ phụ trong bảng (small, text-muted) cũng trắng */
+            .table td small,
+            .table td .text-muted {
+                color: #ccc !important;
+            }
+
+    </style>
+</head>
+<body>
+    <!-- Seller Navigation -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #111; border-bottom: 1px solid white;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/Seller">QUẢN LÝ CỬA HÀNG</a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">Xin chào, @Session["UserName"]</span>
+                <a class="nav-link" href="~/Account/Logout">Đăng Xuất</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="~/Seller" class="list-group-item list-group-item-action" style="background-color: #111; border: 1px solid white; color: white;">
+                        📊 Tổng Quan
+                    </a>
+                    <a href="~/Seller/Products" class="list-group-item list-group-item-action active" style="background-color: #007bff; border-color: #007bff;">
+                        📦 Quản Lý Sản Phẩm
+                    </a>
+                    <a href="~/Seller/Orders" class="list-group-item list-group-item-action" style="background-color: #111; border: 1px solid white; color: white;">
+                        📋 Quản Lý Đơn Hàng
+                    </a>
+                    <a href="~/Seller/Revenue" class="list-group-item list-group-item-action" style="background-color: #111; border: 1px solid white; color: white;">
+                        💰 Thống Kê Doanh Thu
+                    </a>
+                    <a href="~/Category"
+                       class="list-group-item list-group-item-action"
+                       style="background-color:#111; border:1px solid white; color:white;">
+                        🎵 Quản Lý Thể Loại
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>QUẢN LÝ SẢN PHẨM</h2>
+                    <a href="~/Seller/AddProduct" class="btn btn-primary">+ Thêm Sản Phẩm Mới</a>
+                </div>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                }
+                
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                }
+
+                <!-- Products Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Danh Sách Sản Phẩm (@Model.Count sản phẩm)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Hình Ảnh</th>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Loại</th>
+                                        <th>Giá Bán</th>
+                                        <th>Tồn Kho</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Any())
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.AnhBia))
+                                                    {
+                                                        <img src="~/Content/Images/@item.AnhBia" alt="@item.TenDia" class="product-image" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="product-image bg-secondary d-flex align-items-center justify-content-center">
+                                                            <span>No Image</span>
+                                                        </div>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <strong>@item.TenDia</strong>
+                                                    @*<br>
+                                                    <small class="text-muted">@item.MaDia</small>*@
+                                                </td>
+                                                <td>
+                                                    @if (item.LoaiDia != null)
+                                                    {
+                                                        <span>@item.LoaiDia.TenLoaiDia</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>-</span>
+                                                    }
+                                                </td>
+                                                <td>@string.Format("{0:N0} VNĐ", item.GiaBan)</td>
+                                                <td>
+                                                    @*<span class="@(item.SoLuongTon > 10 ? "text-success" : item.SoLuongTon > 0 ? "text-warning" : "text-danger")">
+                                                        @item.SoLuongTon
+                                                    </span>*@
+                                                    <span>
+                                                        @item.SoLuongTon
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @if (item.TrangThai)
+                                                    {
+                                                        <span class="status-badge status-active">Đang Bán</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="status-badge status-inactive">Tạm Ẩn</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="~/Seller/EditProduct/@item.MaDia" class="btn btn-outline-primary btn-sm">
+                                                            ✏️ Sửa
+                                                        </a>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteProduct(@item.MaDia, '@item.TenDia')">
+                                                            🗑️ Xóa
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="7" class="text-center">
+                                                <div class="alert alert-info">
+                                                    Chưa có sản phẩm nào. <a href="~/Seller/AddProduct" class="alert-link">Thêm sản phẩm đầu tiên</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa sản phẩm <strong id="productName"></strong>?</p>
+                    <p class="text-warning"><small>Hành động này không thể hoàn tác!</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let productToDelete = null;
+
+        function deleteProduct(productId, productName) {
+            productToDelete = productId;
+            document.getElementById('productName').textContent = productName;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (productToDelete) {
+                $.ajax({
+                    url: '@Url.Action("DeleteProduct", "Seller")',
+                    type: 'POST',
+                    data: { id: productToDelete },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra!');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

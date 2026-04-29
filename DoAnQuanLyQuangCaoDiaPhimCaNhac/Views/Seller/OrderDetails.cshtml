@@ -1,0 +1,158 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DonHang
+@{
+    ViewBag.Title = "Chi Tiết Đơn Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Chi Tiết Đơn Hàng - @Model.MaDonHang</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+    body { background-color: #000; color: #f5f5f5; }
+
+    /* Card */
+    .card {
+        background-color: #111;
+        border: 1px solid rgba(255,255,255,.12);
+        color: #f5f5f5;
+    }
+
+    .card-header {
+        background-color: #181818;
+        border-bottom: 1px solid rgba(255,255,255,.15);
+        color: #ffffff;
+    }
+
+    /* Table */
+    .table {
+        color: #ffffff;
+    }
+    .table thead {
+        background-color: #222 !important;
+        color: #fff !important;
+        border-bottom: 2px solid #444;
+    }
+    .table tbody tr {
+        background-color: #151515;
+        border-color: #333;
+    }
+    .table tbody tr:hover {
+        background-color: #1e1e1e;
+    }
+
+    /* Image */
+    .img-thumb {
+        width: 80px;
+        height: auto;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid #333;
+    }
+
+    /* Buttons */
+    .btn-outline-light {
+        color: white;
+        border-color: white;
+    }
+    .btn-outline-light:hover {
+        background-color: #0d6efd;
+        color: white !important;
+        border-color: #0d6efd;
+    }
+
+    /* Total box */
+    .total-box {
+        font-size: 1.15rem;
+        text-align: right;
+        margin-top: 10px;
+        color: #fff;
+    }
+
+    .text-warning {
+        color: #ffc107 !important;
+    }
+
+    /* Print */
+    media print {
+        .no-print { display: none !important; }
+        body { background-color: white; color: black !important; }
+        .card { border: none; background: none; color: black !important; }
+        .table thead, .table tbody tr { background: white !important; color: black !important; }
+        img { border: none !important; }
+    }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3 no-print">
+            <a href="@Url.Action("Orders","Seller")" class="btn btn-outline-light">⬅ Quay lại</a>
+            <button class="btn btn-primary" onclick="window.print()">🖨 In đơn hàng</button>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Thông Tin Đơn Hàng #@Model.MaDonHang</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Khách Hàng:</strong> @(Model.KhachHang != null ? Model.KhachHang.HoTen : "Khách lạ")</p>
+                <p><strong>Ngày Đặt:</strong> @Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</p>
+                <p><strong>Ngày Giao:</strong> @(Model.NgayGiao.HasValue ? Model.NgayGiao.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa giao")</p>
+                <p><strong>Tổng Tiền:</strong> <span class="text-warning fw-bold">@Model.TongTien.ToString("N0") ₫</span></p>
+                <p><strong>Trạng Thái:</strong> @(Model.TrangThaiGiaoHang != null ? Model.TrangThaiGiaoHang.TenTrangThai : "Không xác định")</p>
+                <p><strong>Địa chỉ giao:</strong> @(!string.IsNullOrEmpty(Model.DiaChiGiao) ? Model.DiaChiGiao : "-")</p>
+                @if (!string.IsNullOrEmpty(Model.GhiChu))
+                {<p><strong>Ghi chú:</strong> @Model.GhiChu</p>}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><h5>Chi Tiết Sản Phẩm</h5></div>
+            <div class="card-body table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tên Đĩa</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ChiTietDonHangs != null && Model.ChiTietDonHangs.Any())
+                        {
+                            foreach (var item in Model.ChiTietDonHangs)
+                            {
+                                var prod = item.DiaPhimCaNhac;
+                                string img = prod != null && !string.IsNullOrEmpty(prod.AnhBia) ? prod.AnhBia : "no-image.jpg";
+                                string ten = prod != null ? prod.TenDia : "Không xác định";
+                                decimal thanhTien = item.SoLuong * item.DonGia;
+                                <tr>
+                                    <td>
+                                        <img src="@Url.Content("~/Content/Images/" + img)" alt="@ten" class="img-thumb" />
+                                    </td>
+                                    <td>@ten</td>
+                                    <td>@item.SoLuong</td>
+                                    <td>@string.Format("{0:N0} ₫", item.DonGia)</td>
+                                    <td>@string.Format("{0:N0} ₫", thanhTien)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="5">Không có sản phẩm nào trong đơn hàng này.</td></tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="total-box">
+                    <strong>Tổng cộng:</strong> <span class="text-warning">@Model.TongTien.ToString("N0") ₫</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

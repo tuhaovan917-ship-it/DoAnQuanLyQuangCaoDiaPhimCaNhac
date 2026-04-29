@@ -1,0 +1,104 @@
+﻿@model DoAnQuanLyQuangCaoDiaPhimCaNhac.Models.DiaPhimCaNhac
+
+@{
+    ViewBag.Title = "Thêm đĩa phim / ca nhạc mới";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // nếu bạn có layout khác thì thay tên tại đây
+}
+
+<h2 class="mb-4">🩵 Thêm đĩa phim / ca nhạc mới</h2>
+
+@using (Html.BeginForm("AddProduct", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.TenDia, "Tên đĩa", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TenDia, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên đĩa" } })
+            @Html.ValidationMessageFor(model => model.TenDia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", rows = 4, placeholder = "Nhập mô tả chi tiết" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.GiaBan, "Giá bán (VNĐ)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập giá bán" } })
+            @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.MaLoaiDia, "Loại đĩa", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.DropDownList("MaLoaiDia", ViewBag.LoaiDiaList as SelectList, "Chọn loại đĩa", new { @class = "form-control" })*@
+            @Html.DropDownListFor(model => model.MaLoaiDia, ViewBag.LoaiDiaList as SelectList, "Chọn loại đĩa", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.MaNhaSanXuat, "Nhà sản xuất", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.DropDownList("MaNhaSanXuat", ViewBag.NhaSanXuatList as SelectList, "Chọn nhà sản xuất", new { @class = "form-control" })*@
+            @Html.DropDownListFor(model => model.MaNhaSanXuat, ViewBag.NhaSanXuatList as SelectList, "Chọn nhà sản xuất", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.ChatLuong, "Chất lượng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ChatLuong, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập chất lượng đĩa" } })
+            @Html.ValidationMessageFor(model => model.ChatLuong, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.SoLuongTon, "Số lượng tồn", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SoLuongTon, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số lượng tồn" } })
+            @Html.ValidationMessageFor(model => model.SoLuongTon, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        @Html.LabelFor(model => model.NgonNgu, "Ngôn ngữ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NgonNgu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập ngôn ngữ" } })
+            @Html.ValidationMessageFor(model => model.NgonNgu, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        Là đĩa phim nổi bật
+        @Html.CheckBoxFor(m => m.LaDiaPhim)
+    </div>
+
+
+    <div class="form-group mb-3">
+        <label class="control-label col-md-2">Ảnh bìa</label>
+        <div class="col-md-10">
+            <input type="file" name="AnhBiaFile" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group mt-4">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Thêm sản phẩm" class="btn btn-primary" />
+            <a href="@Url.Action("Products", "Seller")" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

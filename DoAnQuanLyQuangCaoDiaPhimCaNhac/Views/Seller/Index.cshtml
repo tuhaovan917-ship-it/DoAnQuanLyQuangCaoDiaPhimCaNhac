@@ -1,0 +1,186 @@
+@{
+    ViewBag.Title = "Quản Lý Cửa Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quản Lý Cửa Hàng - MusicWeb</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+        }
+        .card {
+            background-color: #111;
+            border: 1px solid white;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #222;
+            border-bottom: 1px solid white;
+            color: white;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+        }
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+        .navbar-brand {
+            color: white !important;
+        }
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .card-body p {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Seller Navigation -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #111; border-bottom: 1px solid white;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/Seller">QUẢN LÝ CỬA HÀNG</a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">Xin chào, @Session["UserName"]</span>
+                <a class="nav-link" href="~/Account/Logout">Đăng Xuất</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="~/Seller" class="list-group-item list-group-item-action active" style="background-color: #007bff; border-color: #007bff;">
+                        📊 Tổng Quan
+                    </a>
+                    <a href="~/Seller/Products" class="list-group-item list-group-item-action" style="background-color: #111; border: 1px solid white; color: white;">
+                        📦 Quản Lý Sản Phẩm
+                    </a>
+                    <a href="~/Seller/Orders" class="list-group-item list-group-item-action" style="background-color: #111; border: 1px solid white; color: white;">
+                        📋 Quản Lý Đơn Hàng
+                    </a>
+                    <a href="~/Seller/Revenue" class="list-group-item list-group-item-action" style="background-color: #111; border: 1px solid white; color: white;">
+                        💰 Thống Kê Doanh Thu
+                    </a>
+                    <a href="~/Category"
+                       class="list-group-item list-group-item-action"
+                       style="background-color:#111; border:1px solid white; color:white;">
+                        🎵 Quản Lý Thể Loại
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <h2 class="mb-4">TỔNG QUAN CỬA HÀNG</h2>
+                
+                <!-- Statistics Cards -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body stat-card">
+                                <div class="stat-number">@ViewBag.TotalProducts</div>
+                                <div class="stat-label form-control-color: bg-white">Tổng Sản Phẩm</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body stat-card">
+                                <div class="stat-number" >@ViewBag.TotalOrders</div>
+                                <div class="stat-label form-control-color: bg-white">Tổng Đơn Hàng</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body stat-card">
+                                <div class="stat-number">@ViewBag.CompletedOrders</div>
+                                <div class="stat-label form-control-color: bg-white">Đơn Hoàn Thành</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body stat-card">
+                                <div class="stat-number">@ViewBag.PendingOrders</div>
+                                <div class="stat-label form-control-color: bg-white">Đơn Chờ Xử Lý</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>🎯 Quản Lý Sản Phẩm</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Thêm, sửa, xóa sản phẩm và quản lý thông tin hàng hóa.</p>
+                                <a href="~/Seller/Products" class="btn btn-primary ms-2">Xem Sản Phẩm</a>
+                                <a href="~/Seller/AddProduct" class="btn btn-primary ms-2">Thêm Sản Phẩm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>📋 Quản Lý Đơn Hàng</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Theo dõi và cập nhật trạng thái đơn hàng từ khách hàng.</p>
+                                <a href="~/Seller/Orders" class="btn btn-primary ms-2">Xem Đơn Hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders (if any) -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>📊 Thống Kê Doanh Thu</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Xem báo cáo doanh thu và phân tích hiệu suất bán hàng.</p>
+                                <a href="~/Seller/Revenue" class="btn btn-primary">Xem Báo Cáo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
