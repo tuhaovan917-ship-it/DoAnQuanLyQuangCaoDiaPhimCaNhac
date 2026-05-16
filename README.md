@@ -120,9 +120,10 @@ cd DoAnQuanLyQuangCaoDiaPhimCaNhac
 
 #### Bước 3: Cấu hình Chuỗi kết nối (Connection String)
 
-1. Mở file solution `DoAnQuanLyQuangCaoDiaPhimCaNhac.sln` bằng **Visual Studio**.
-2. Tìm đến file `Web.config` trong thư mục gốc của dự án (`DoAnLapTrinhWeb`).
-3. Cập nhật thuộc tính `connectionString` trong thẻ `<connectionStrings>` sao cho khớp với tên SQL Server trên máy của bạn, áp dụng cho connection string có tên `QuanLyDiaPhimCaNhac_EditedEntities`.
+1. **Tạo file Web.config:** Trong thư mục gốc của dự án, hãy sao chép file `Web.config.example` (hoặc `Web.config.example.txt`) và đổi tên thành `Web.config`.
+2. Mở file solution `DoAnQuanLyQuangCaoDiaPhimCaNhac.sln` bằng **Visual Studio**.
+3. Tìm đến file `Web.config` vừa tạo.
+4. Cập nhật thuộc tính `connectionString` trong thẻ `<connectionStrings>` sao cho khớp với tên SQL Server trên máy của bạn.
 
 Ví dụ cấu trúc trong `Web.config`:
 ```xml
