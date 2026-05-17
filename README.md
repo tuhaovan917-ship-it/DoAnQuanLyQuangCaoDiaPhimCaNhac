@@ -80,10 +80,7 @@ Dự án tuân thủ nghiêm ngặt kiến trúc ASP.NET MVC, phân tách minh b
 ⚙️ Công cụ phát triển
 - **IDE:** `Visual Studio` (Tối ưu trên các phiên bản tương thích tốt với .NET Framework 4.7.2)
 
-## 📸 4. Giao Diện Ứng Dụng Tiêu Biểu (Screenshots)
-(Bổ sung sau)
-
-## 💡 5. Điểm Nhấn Kỹ Thuật (Technical Highlights)
+## 💡 4. Điểm Nhấn Kỹ Thuật (Technical Highlights)
 1. **Kiến trúc Multi-vendor & Tách đơn hàng:** Tự động phân tích và bóc tách giỏ hàng tổng thành các đơn hàng con theo từng người bán, đảm bảo minh bạch dòng tiền và đồng bộ tồn kho chính xác.
 
 2. **Tối ưu hóa LINQ nâng cao:** Sử dụng GroupBy, Include, Select để trích xuất dữ liệu đa tầng; tách biệt truy vấn thô và định dạng hiển thị trong bộ nhớ (In-memory Formatting) giúp giảm tải cho SQL Server.
@@ -92,10 +89,10 @@ Dự án tuân thủ nghiêm ngặt kiến trúc ASP.NET MVC, phân tách minh b
 
 4. **Tương tác mượt mà với AJAX:** Tích hợp các AJAX Endpoints xử lý cập nhật giỏ hàng thời gian thực và bộ lọc động, tối ưu hóa băng thông và hạn chế tải lại trang.
 
-## 💻 6. Cài Đặt và Khởi Chạy (Installation)
+## 💻 5. Cài Đặt và Khởi Chạy (Installation)
 Để chạy dự án này trên máy cục bộ, bạn cần thực hiện các bước sau:
 
-### 6.1. Tiền đề (Prerequisites)
+### 5.1. Tiền đề (Prerequisites)
 
 Để khởi chạy dự án, máy tính của bạn cần có:
 
@@ -103,7 +100,7 @@ Dự án tuân thủ nghiêm ngặt kiến trúc ASP.NET MVC, phân tách minh b
 *   **SQL Server Management Studio (SSMS)** hoặc SQL Server Express
 *   **.NET Framework 4.7.2** hoặc phiên bản tương đương
 
-### 6.2. Các bước thực hiện
+### 5.2. Các bước thực hiện
 
 #### Bước 1: Tải mã nguồn về máy
 
